@@ -10,13 +10,19 @@ import java.util.Map;
 
 public class infixToPostfix{
 
-    private static final Map<Character, Integer> operators = Map.of(
-        '+', 0
-        '-', 0
-        '*', 1
-        '/', 1
-        '^', 2
-    );
+    private static final Map<Character, Integer> operators;
+
+    // 2. Initialize it inside a static block
+    static {
+        Map<Character, Integer> tempMap = new HashMap<>(); // Temp map to hold values
+        tempMap.put('+', 0);
+        tempMap.put('-', 0);
+        tempMap.put('*', 1);
+        tempMap.put('/', 1);
+        tempMap.put('^', 2);
+
+        operators = tempMap;
+    }
 
     
 

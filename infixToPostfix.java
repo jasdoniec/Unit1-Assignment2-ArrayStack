@@ -31,9 +31,48 @@ public class infixToPostfix{
         StringBuilder output = new StringBuilder();
         char[] array = expression.toCharArray();
 
+        boolean newop = false;
+
         for (char c : array){
-            if (operators.contains(c))
+            if (c == ' ')
+                continue;
+
+            if (c == '('){
+               stack.push(c);
+            }
+
+            else if (c == ')'){
+                while (true){
+                    char newchar = stack.pop();
+                    if (newchar == '(')
+                        break;
+                    output.append(" ");
+                    output.append(newchar);
+                }
+            }
+
+            else if (operators.containsKey(c)){
+                newop = true;
+                int precedent = operators.get(c);
+                while(!stack.empty() && operators.get(stack.peek())>=precedent){
+                    output.append(" ");
+                    output.append(stack.pop());
+                }
+                stack.push(c);
+            }
+            else{
+                if (newop){
+                    output.append(" ");
+                    newop = false;
+                }
+                output.append(c);
+            }
        }
+
+        while(!stack.empty()){
+            output.append(" ");
+            output.append(stack.pop());
+        }
 
         return output.toString();
    }

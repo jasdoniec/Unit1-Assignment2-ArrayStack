@@ -17,7 +17,7 @@ public class infixToPostfixTester{
             }
 
             System.out.println("The postfix expression is:");
-            System.out.println(infixToPostfix.switchInfixToPostfix(output));
+            System.out.println(InfixToPostfix.convertToPostfix(output));
 
             scanner.nextLine();
         }

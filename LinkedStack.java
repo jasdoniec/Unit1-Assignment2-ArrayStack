@@ -80,4 +80,16 @@ public class LinkedStack<T> implements StackInterface<T>
         }
         return -1;              
     }
+
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        LLNode<T> curr = top;
+        while(curr.hasNext()){
+            sb.append(curr);
+            curr = curr.getLink();
+            sb.append(" ");
+        }
+        sb.append(curr);
+        return sb.toString();
+    }
 }

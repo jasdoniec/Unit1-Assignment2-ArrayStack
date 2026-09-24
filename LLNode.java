@@ -32,6 +32,14 @@ public class LLNode<T>
     {
         return link;
     }
+
+    public boolean hasNext(){
+        return link!=null;
+    }
+
+    public String toString(){
+        return info.toString();
+    }
 }
  
  

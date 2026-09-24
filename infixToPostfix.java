@@ -8,7 +8,7 @@ operator: pop and concantenate all operators that have a higher or equal precede
 import java.util.HashMap;
 import java.util.Map;
 
-public class infixToPostfix{
+public class InfixToPostfix{
 
     private static final Map<Character, Integer> operators;
 
@@ -19,6 +19,7 @@ public class infixToPostfix{
         tempMap.put('-', 0);
         tempMap.put('*', 1);
         tempMap.put('/', 1);
+        tempMap.put('%', 1);
         tempMap.put('^', 2);
 
         operators = tempMap;
@@ -26,18 +27,22 @@ public class infixToPostfix{
 
     
 
-    public static String switchInfixToPostfix(String expression){
+    public static String convertToPostfix(String expression){
         StackInterface<Character> stack = new LinkedStack<Character>();
         StringBuilder output = new StringBuilder();
         char[] array = expression.toCharArray();
 
-        boolean newop = false;
+        boolean newop = true;
 
         for (char c : array){
-            if (c == ' ')
+            if (c == ' ' || c == '\t')
                 continue;
 
             if (c == '('){
+                if (!newop){
+                    output.append(" ");
+                    stack.push('*');
+                }
                stack.push(c);
             }
 
@@ -54,14 +59,14 @@ public class infixToPostfix{
             else if (operators.containsKey(c)){
                 newop = true;
                 int precedent = operators.get(c);
-                while(!stack.empty() && operators.get(stack.peek())>=precedent){
+                while(!stack.empty() && precedent != 2 && operators.containsKey(stack.peek()) && operators.get(stack.peek())>=precedent){
                     output.append(" ");
                     output.append(stack.pop());
                 }
                 stack.push(c);
             }
             else{
-                if (newop){
+                if (newop && output.length() != 0){
                     output.append(" ");
                     newop = false;
                 }
